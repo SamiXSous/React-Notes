@@ -1,0 +1,5 @@
+@import '../components/materialize/materialize.scss';
+
+.nav-wrapper {
+    @extend .container;
+}
