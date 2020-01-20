@@ -18,7 +18,7 @@ class Nav extends Component {
   render(){
     return (
       <Navbar 
-        alignLinks = "right" brand = { <a className = "brand-logo" href = ""> Notes </a>}
+        alignLinks = "right" brand = { <a className = "brand-logo" href = "/notes"> Notes </a>}
         menuIcon = {<Icon>menu</Icon>}
         options = {
           {

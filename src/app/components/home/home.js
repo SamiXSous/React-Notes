@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Card, Col, CardTitle, Row, Pagination, Icon} from 'react-materialize';
+import {Link} from 'react-router-dom';
+
 import './home.scss';
 
 
@@ -31,11 +33,13 @@ class Home extends Component {
                         {this.state.data.items.map(note => {
                         return( 
                         <Col m={4}>
-                            <Card className="noteCard" header = {
-                                <CardTitle image="https://thumb.mp-farm.com/1569632/preview.jpg"> {note.title} </CardTitle>}
-                            >
-                            <p>{note.body}</p>
-                            </Card>
+                            <Link to ={`/note/${note.id}`}>
+                                <Card className="noteCard" 
+                                header = {
+                                    <CardTitle image="https://thumb.mp-farm.com/1569632/preview.jpg"> {note.title} </CardTitle>}>
+                                <p>{note.body}</p>
+                                </Card>
+                            </Link>
                         </Col>
                         )})}
                         
@@ -43,7 +47,7 @@ class Home extends Component {
                 </Row>
                 <Pagination
                 activePage={this.state.data.pagination.currentPage}
-                items={this.state.data.pagination.totalItems}
+                items={this.state.data.pagination.totalPages}
                 leftBtn={<Icon>chevron_left</Icon>}
                 maxButtons={this.state.data.pagination.totalPages}
                 rightBtn={<Icon>chevron_right</Icon>}
