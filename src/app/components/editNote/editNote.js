@@ -3,7 +3,8 @@ import { Redirect } from 'react-router-dom'
 import { Card, Col, Button, TextInput, Icon, Row, Textarea } from 'react-materialize';
 import axios from 'axios';
 
-import './newNote.scss';
+import './editNote.scss';
+import Preloader from 'react-materialize/lib/Preloader';
 
 
 class NewNote extends Component {
@@ -12,7 +13,10 @@ class NewNote extends Component {
 
         this.state = {
             loading: true,
-            createdId: null
+            createdId: null,
+            title: null,
+            body: null,
+            author: null
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -20,13 +24,13 @@ class NewNote extends Component {
     }
 
     async componentDidMount() {
-        // await fetch(`https://docent.cmi.hro.nl/bootb/demo/notes/${this.props.match.params.noteId}`, 
-        // {headers: {Accept: 'application/json'}})
-        // .then(response => response.json())
-        // .then(data => this.setState({
-        //     data: data,
-        //     loading: false
-        // }));
+        await fetch(`https://docent.cmi.hro.nl/bootb/demo/notes/${this.props.match.params.noteId}`,
+            { headers: { Accept: 'application/json' } })
+            .then(response => response.json())
+            .then(data => this.setState({
+                data: data,
+                loading: false
+            }))
     }
 
     handleChange(event) {
@@ -34,11 +38,18 @@ class NewNote extends Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const id = target.id;
 
-        console.log(id, value);
-
         this.setState({
             [id]: value
         });
+        if (!this.state.title) {
+            this.state.title = this.state.data.title;
+        }
+        if (!this.state.body) {
+            this.state.body = this.state.data.body;
+        }
+        if (!this.state.author) {
+            this.state.author = this.state.data.author;
+        }
     }
 
     handleSubmit(event) {
@@ -49,17 +60,17 @@ class NewNote extends Component {
             body: this.state.body,
             author: this.state.author
         }
-        axios.post(`https://docent.cmi.hro.nl/bootb/demo/notes/`, note, {
+        axios.put(`https://docent.cmi.hro.nl/bootb/demo/notes/${this.state.data.id}`, note, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
         })
             .then(res => {
-                if (res.status === 201) {
+                if (res.status === 200) {
                     console.log(res)
                     this.setState({
-                        createdId: res.data.id
+                        editedId: res.data.id
                     })
                 }
 
@@ -68,16 +79,26 @@ class NewNote extends Component {
     }
 
     render() {
-        if (this.state.createdId) {
+        if (!this.state.data) {
             return (
-                <Redirect to={`/note/${this.state.createdId}`} />
+                <Preloader
+                    active
+                    color="blue"
+                    flashing={false}
+                    size="big"
+                />
+            )
+        }
+        if (this.state.editedId) {
+            return (
+                <Redirect to={`/note/${this.state.editedId}`} />
             )
         }
         return (
             <Col s={12}>
                 <form onSubmit={this.handleSubmit} method="post">
                     <Card
-                        title={`Create New Note`}
+                        title={`Edit Note`}
                         actions={[
                             <Button
                                 node="button"
@@ -107,11 +128,18 @@ class NewNote extends Component {
                         <Row>
 
                             <Col s={12}>
-                                <TextInput id="title" onChange={this.handleChange} label="Title" required />
+                                <TextInput
+                                    id="title"
+                                    onChange={this.handleChange}
+                                    label="Title"
+                                    defaultValue={this.state.data.title}
+                                    required
+                                />
                             </Col>
                             <Col s={12}>
                                 <Textarea id="body"
                                     onChange={this.handleChange}
+                                    defaultValue={this.state.data.body}
                                     label='message body'
                                     l={6}
                                     m={6}
@@ -121,7 +149,13 @@ class NewNote extends Component {
                                 />
                             </Col>
                             <Col s={12}>
-                                <TextInput onChange={this.handleChange} id="author" label="Author" required />
+                                <TextInput
+                                    id="author"
+                                    onChange={this.handleChange}
+                                    defaultValue={this.state.data.author}
+                                    label="Author"
+                                    required
+                                />
                             </Col>
                         </Row>
                     </Card>

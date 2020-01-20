@@ -3,16 +3,27 @@
         font-weight: 700 !important;
         -webkit-text-stroke: 1px black;
     }
+
     .card-content {
         height: 125px;
         color: black;
     }
 }
 
- 
-
-// Pagination
-.pagination{
-    text-align: center;
+.preloader-wrapper {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
+
+
+// Pagination
+.pagination {
+    text-align: center;
+}

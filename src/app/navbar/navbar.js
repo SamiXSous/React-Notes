@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Navbar, NavItem, Icon} from 'react-materialize';
+import React, { Component } from 'react';
+import { Navbar, NavItem, Icon } from 'react-materialize';
 import './navbar.scss';
 
 class Nav extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -11,12 +11,12 @@ class Nav extends Component {
     }
   }
 
-  render(){
+  render() {
     return (
-      <Navbar 
-        alignLinks = "right" brand = { <a className = "brand-logo" href = "/notes"> Notes </a>}
-        menuIcon = {<Icon>menu</Icon>}
-        options = {
+      <Navbar
+        alignLinks="right" brand={<a className="brand-logo" href="/"> Notes </a>}
+        menuIcon={<Icon>menu</Icon>}
+        options={
           {
             draggable: true,
             edge: 'left',
@@ -27,10 +27,10 @@ class Nav extends Component {
             onOpenStart: null,
             outDuration: 200,
             preventScrolling: true
-          } 
-        }> 
-        <NavItem href = "/note/create" >Create New Note</NavItem>
-      </Navbar> 
+          }
+        }>
+        <NavItem href="/note/create" >Create New Note</NavItem>
+      </Navbar>
     );
   }
 }
