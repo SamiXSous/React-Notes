@@ -11,10 +11,6 @@ class Nav extends Component {
     }
   }
 
-  componentDidMount(){
- 
-  }
-
   render(){
     return (
       <Navbar 
@@ -33,8 +29,7 @@ class Nav extends Component {
             preventScrolling: true
           } 
         }> 
-        <NavItem href = "" >Create New Note</NavItem> 
-        <NavItem href = "" >Test</NavItem>
+        <NavItem href = "/note/create" >Create New Note</NavItem>
       </Navbar> 
     );
   }

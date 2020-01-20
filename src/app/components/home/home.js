@@ -57,17 +57,11 @@ class Home extends Component {
         
         }
         return (
-          
+            <Col s={4}>
+                <Card title="Test">
 
-            <Col s={4}><Card title="Test"> </Card></Col>
-
-               
-            
-                
-                
-            // })}       
-                
-         
+                </Card>
+            </Col>  
        );
     }
 }

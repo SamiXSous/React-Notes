@@ -6,6 +6,7 @@ import {
 import Nav from './navbar/navbar';
 import Home from './components/home/home';
 import Note from './components/note/note';
+import NewNote from './components/newNote/newNote';
 
 import './App.scss';
 
@@ -18,6 +19,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route path="/notes" component={Home} />
+            <Route path="/note/create" component={NewNote}/>
             <Route path="/note/:noteId" component={Note}/>
           </Switch>
         </Router>
