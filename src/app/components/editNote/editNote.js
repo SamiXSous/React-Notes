@@ -42,13 +42,19 @@ class NewNote extends Component {
             [id]: value
         });
         if (!this.state.title) {
-            this.state.title = this.state.data.title;
+            this.setState({
+                title: this.state.data.title
+            })
         }
         if (!this.state.body) {
-            this.state.body = this.state.data.body;
+            this.setState({
+                title: this.state.data.body
+            })
         }
         if (!this.state.author) {
-            this.state.author = this.state.data.author;
+            this.setState({
+                title: this.state.data.author
+            })
         }
     }
 

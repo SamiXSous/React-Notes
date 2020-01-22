@@ -10,19 +10,54 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            loading: true
+            loading: true,
+            itemStart: 1,
+            itemLimit: 6
         }
     }
 
-    async componentDidMount() {
-        await fetch('https://docent.cmi.hro.nl/bootb/demo/notes/?limit=6',
-            { headers: { Accept: 'application/json' } })
-            .then(response => response.json())
-            .then(data => this.setState({
-                data: data,
-                loading: false
-            }));
+    componentDidMount() {
+        this.getnotes()
     }
+    componentDidUpdate(){
+        this.getnotes()
+    }
+
+    getnotes(){
+        fetch(`https://docent.cmi.hro.nl/bootb/demo/notes/?start=${this.state.itemStart}&limit=${this.state.itemLimit}`, {
+                headers: {
+                    Accept: 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    data: data,
+                    loading: false
+                });
+            }
+            );
+    }
+
+    pagination(page){
+        const limit = this.state.itemLimit;
+        this.setState({itemStart: (page-1)*limit+1});
+        this.maxButtons();
+    }
+
+    maxButtons(){
+        // if (this.state.data.pagination.totalPages !== this.state.itemLimit) {
+        //     this.setState({
+        //         data: {
+        //             pagination: {
+        //                 totalPages: this.state.data.pagination.totalPages - 1
+        //             }
+        //         }
+            
+        //     })
+        // }
+    }
+  
 
     render() {
         if (this.state.data) {
@@ -32,7 +67,7 @@ class Home extends Component {
                         <Col>
                             {this.state.data.items.map(note => {
                                 return (
-                                    <Col m={4} key={2} >
+                                    <Col m={4} key={note.id} >
                                         <Link to={`/note/${note.id}`}>
                                             <Card className="noteCard"
                                                 header={
@@ -48,6 +83,7 @@ class Home extends Component {
                     </Row>
                     <Pagination
                         activePage={this.state.data.pagination.currentPage}
+                        onSelect={e =>{this.pagination(e)}}
                         items={this.state.data.pagination.totalPages}
                         leftBtn={<Icon>chevron_left</Icon>}
                         maxButtons={this.state.data.pagination.totalPages}

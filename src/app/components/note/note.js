@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Card, Col, Button, Row, Pagination, Icon } from 'react-materialize';
+import { Card, Col, Button, Icon } from 'react-materialize';
 import './note.scss';
 import axios from 'axios';
 
