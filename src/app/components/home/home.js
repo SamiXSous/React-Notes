@@ -32,7 +32,7 @@ class Home extends Component {
                         <Col>
                             {this.state.data.items.map(note => {
                                 return (
-                                    <Col m={4}>
+                                    <Col m={4} key={2} >
                                         <Link to={`/note/${note.id}`}>
                                             <Card className="noteCard"
                                                 header={

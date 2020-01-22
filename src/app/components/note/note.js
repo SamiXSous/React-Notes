@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Card, Col, Button, Row, Pagination, Icon } from 'react-materialize';
 import './note.scss';
+import axios from 'axios';
 
 
 class Note extends Component {
@@ -10,10 +11,12 @@ class Note extends Component {
 
         this.state = {
             loading: true,
-            editNote: false
+            editNote: false,
+            deletedNote: false
         }
 
         this.editNote = this.editNote.bind(this);
+        this.deleteNote = this.deleteNote.bind(this);
         // console.log(this.props)
     }
 
@@ -34,17 +37,32 @@ class Note extends Component {
         })
     }
 
+    deleteNote(event) {
+        event.preventDefault();
+        axios.delete(`https://docent.cmi.hro.nl/bootb/demo/notes/${this.state.data.id}`)
+            .then(() => {
+                this.setState({
+                    deletedNote: true
+                })
+            })
+    }
+
     render() {
-        if (this.state.editNote === true) {
+        if (this.state.editNote) {
             return (<Redirect to={`/note/${this.state.data.id}/edit`} />)
+        }
+        if (this.state.deletedNote) {
+            return (<Redirect to="/" />)
         }
         if (this.state.data) {
             return (
                 <Col s={12}>
                     <Card
+                        closeicon={<Icon>close</Icon>}
+                        revealicon={<Icon>more_vert</Icon>}
                         title={`Title: ${this.state.data.title}`}
                         actions={[
-                            <Button
+                            <Button key={2}
                                 onClick={this.editNote}
                                 node="button"
                                 style={{
@@ -57,6 +75,8 @@ class Note extends Component {
                             </Icon>
                             </Button>,
                             <Button
+                                key={4}
+                                onClick={this.deleteNote}
                                 className="red"
                                 node="button"
                                 style={{
