@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Col, CardTitle, Row, Pagination, Icon, Preloader } from 'react-materialize';
+import { Card, Col, CardTitle, Row, Pagination, Icon, Preloader, Select } from 'react-materialize';
 import { Link } from 'react-router-dom';
 
 import './home.scss';
@@ -42,20 +42,6 @@ class Home extends Component {
     pagination(page){
         const limit = this.state.itemLimit;
         this.setState({itemStart: (page-1)*limit+1});
-        this.maxButtons();
-    }
-
-    maxButtons(){
-        // if (this.state.data.pagination.totalPages !== this.state.itemLimit) {
-        //     this.setState({
-        //         data: {
-        //             pagination: {
-        //                 totalPages: this.state.data.pagination.totalPages - 1
-        //             }
-        //         }
-            
-        //     })
-        // }
     }
   
 
@@ -81,6 +67,8 @@ class Home extends Component {
 
                         </Col>
                     </Row>
+                    <Row>
+
                     <Pagination
                         activePage={this.state.data.pagination.currentPage}
                         onSelect={e =>{this.pagination(e)}}
@@ -89,6 +77,38 @@ class Home extends Component {
                         maxButtons={this.state.data.pagination.totalPages}
                         rightBtn={<Icon>chevron_right</Icon>}
                     />
+
+                    {/* Future Feature to select how many items per page */}
+                    {/* <Select
+                        label="Choose your option"
+                        class="browser-default"
+                        options={{
+                            classes: '',
+                            dropdownOptions: {
+                            alignment: 'left',
+                            autoTrigger: false,
+                            closeOnClick: false,
+                            constrainWidth: true,
+                            container: null,
+                            coverTrigger: false,
+                         
+                            }
+                        }}
+                        value="2"
+                        >
+                        <option value="1">
+                            Option 1
+                        </option>
+                        <option value="2">
+                            Option 2
+                        </option>
+                        <option value="3">
+                            Option 3
+                        </option>
+                    </Select> */}
+
+                    </Row>
+                    
                 </Card>
             )
 
