@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Col, CardTitle, Row, Pagination, Icon, Preloader, Select } from 'react-materialize';
+import { Card, Col, CardTitle, Row, Pagination, Icon, Preloader } from 'react-materialize';
 import { Link } from 'react-router-dom';
 
 import './home.scss';
@@ -19,16 +19,16 @@ class Home extends Component {
     componentDidMount() {
         this.getnotes()
     }
-    componentDidUpdate(){
+    componentDidUpdate() {
         this.getnotes()
     }
 
-    getnotes(){
+    getnotes() {
         fetch(`https://docent.cmi.hro.nl/bootb/demo/notes/?start=${this.state.itemStart}&limit=${this.state.itemLimit}`, {
-                headers: {
-                    Accept: 'application/json'
-                }
-            })
+            headers: {
+                Accept: 'application/json'
+            }
+        })
             .then(response => response.json())
             .then(data => {
                 this.setState({
@@ -39,11 +39,11 @@ class Home extends Component {
             );
     }
 
-    pagination(page){
+    pagination(page) {
         const limit = this.state.itemLimit;
-        this.setState({itemStart: (page-1)*limit+1});
+        this.setState({ itemStart: (page - 1) * limit + 1 });
     }
-  
+
 
     render() {
         if (this.state.data) {
@@ -69,17 +69,17 @@ class Home extends Component {
                     </Row>
                     <Row>
 
-                    <Pagination
-                        activePage={this.state.data.pagination.currentPage}
-                        onSelect={e =>{this.pagination(e)}}
-                        items={this.state.data.pagination.totalPages}
-                        leftBtn={<Icon>chevron_left</Icon>}
-                        maxButtons={this.state.data.pagination.totalPages}
-                        rightBtn={<Icon>chevron_right</Icon>}
-                    />
+                        <Pagination
+                            activePage={this.state.data.pagination.currentPage}
+                            onSelect={e => { this.pagination(e) }}
+                            items={this.state.data.pagination.totalPages}
+                            leftBtn={<Icon>chevron_left</Icon>}
+                            maxButtons={this.state.data.pagination.totalPages}
+                            rightBtn={<Icon>chevron_right</Icon>}
+                        />
 
-                    {/* Future Feature to select how many items per page */}
-                    {/* <Select
+                        {/* Future Feature to select how many items per page */}
+                        {/* <Select
                         label="Choose your option"
                         class="browser-default"
                         options={{
@@ -108,7 +108,7 @@ class Home extends Component {
                     </Select> */}
 
                     </Row>
-                    
+
                 </Card>
             )
 

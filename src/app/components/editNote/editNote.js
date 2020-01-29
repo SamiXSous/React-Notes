@@ -35,12 +35,13 @@ class NewNote extends Component {
 
     handleChange(event) {
         const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const value = target.value;
         const id = target.id;
 
         this.setState({
             [id]: value
         });
+        // console.log(id, value)
         if (!this.state.title) {
             this.setState({
                 title: this.state.data.title
@@ -48,14 +49,15 @@ class NewNote extends Component {
         }
         if (!this.state.body) {
             this.setState({
-                title: this.state.data.body
+                body: this.state.data.body
             })
         }
         if (!this.state.author) {
             this.setState({
-                title: this.state.data.author
+                author: this.state.data.author
             })
         }
+
     }
 
     handleSubmit(event) {
